@@ -1,9 +1,24 @@
 from typing import List, TypeVar, Generic
 from abc import ABC, abstractmethod
 
+class User(ABC):
+    def __init__(self, user_id: int, name: str, email: str):
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+
+    @abstractmethod
+    def role(self) -> str:
+        ...
+
 class Student(User):
     def get_role(self)->str:
         return "Student"
+
+#user may need to change depending on what its called
+class Instructor(User):
+   def get_role(self) -> str:
+       return "Instructor"
 
 class Assessment(ABC):
     def __init__(self, title: str):
@@ -34,5 +49,3 @@ class Course(Generic[T]):
     def grade_all(self):
         for assessment in self.assessments:
             assessment.grade()
-
-#Complete your main function here
