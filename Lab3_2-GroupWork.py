@@ -47,7 +47,7 @@ class Student(User):
 
 class Instructor(User):
     """ Instructor class for User """
-    def role(self):
+    def get_role(self):
         return "The role of this user is Instructor"
 
 class Admin(User):
@@ -55,10 +55,10 @@ class Admin(User):
     def get_role(self):
         return "The role of this user is Admin "
     
-    def create_course(self, name:str) -> Course:
-        """ Creates a new course. """
-        print(f"Course '{name}' has been created.")
-        return Course(name)
+    def create_course(self, name: str, instructor: str) -> Course:
+        """Creates a new course."""
+        print(f"Course '{name}' has been created with instructor '{instructor}'.")
+        return Course(name, instructor)
     
     def remove_course(self, course: Course, courses: List[Course]):
         """Removes a course from the system."""
@@ -89,3 +89,58 @@ class Admin(User):
             print(f"User '{user.name}' has been deleted.")
         else:
             print(f"User '{user.name}' not found.")
+
+
+### Main Function for Testing ###
+
+def main():
+    # Create an admin
+    admin = Admin("Alice", "alice@example.com")
+
+    # List to store users
+    users = []
+
+    # Admin creates users
+    admin.create_user("Bob", "bob@example.com", "Instructor", users)
+    admin.create_user("Charlie", "charlie@example.com", "Student", users)
+    admin.create_user("Dave", "dave@example.com", "Admin", users)
+
+    # Display all users
+    print("\nUsers in the system:")
+    for user in users:
+        print(f"- {user.name} ({user.get_role()})")
+
+    # Admin deletes a user
+    admin.delete_user(users[1], users)  # Deletes Charlie
+
+    # Display all users after deletion
+    print("\nUsers in the system after deletion:")
+    for user in users:
+        print(f"- {user.name} ({user.get_role()})")
+
+    # List to store courses
+    courses = []
+
+    # Admin creates a course
+    course1 = admin.create_course("Math 101", "Bob")
+    courses.append(course1)
+
+    # Admin creates another course
+    course2 = admin.create_course("Physics 101", "Bob")
+    courses.append(course2)
+
+    # Display all courses
+    print("\nCourses in the system:")
+    for course in courses:
+        print(f"- {course.name}")
+
+    # Admin removes a course
+    admin.remove_course(course1, courses)
+
+    # Display all courses after removal
+    print("\nCourses in the system after removal:")
+    for course in courses:
+        print(f"- {course.name}")
+
+if __name__ == "__main__":
+    main()
