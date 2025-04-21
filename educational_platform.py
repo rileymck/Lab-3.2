@@ -1,6 +1,10 @@
 from typing import List, TypeVar, Generic
 from abc import ABC, abstractmethod
 
+class Student(User):
+    def get_role(self)->str:
+        return "Student"
+
 class Assessment(ABC):
     def __init__(self, title: str):
         self.title = title
