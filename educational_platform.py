@@ -1,6 +1,16 @@
 from typing import List, TypeVar, Generic
 from abc import ABC, abstractmethod
 
+class User(ABC):
+    def __init__(self, user_id: int, name: str, email: str):
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+
+    @abstractmethod
+    def role(self) -> str:
+        ...
+
 class Student(User):
     def get_role(self)->str:
         return "Student"
