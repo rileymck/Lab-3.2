@@ -39,11 +39,22 @@ class User(ABC):
         self.name = name
         self.email = email
 
-class Student(User):
-    """ Student class inherited from User """
-
-    def get_role(self): 
+class Student(User): # Child class (inheritance)
+    def get_role(self)->str:
         return "Student"
+    
+    def check_grades(self, assessment: Assessment):
+        """Checks the grades of a specific assessment."""
+        print(f"Checking grades for {assessment.title}.")
+    
+    def submit_assignment(self, assignment: Assignment):
+        """Submits an assignment."""
+        print(f"Submitting assignment: {assignment.title}.")
+
+
+    def take_quiz(self, quiz: Quiz):
+        """Takes a quiz."""
+        print(f"Taking quiz: {quiz.title}.")
 
 class Instructor(User):
     """ Instructor class for User """
