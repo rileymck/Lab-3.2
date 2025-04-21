@@ -5,6 +5,11 @@ class Student(User):
     def get_role(self)->str:
         return "Student"
 
+#user may need to change depending on what its called
+class Instructor(User):
+   def get_role(self) -> str:
+       return "Instructor"
+
 class Assessment(ABC):
     def __init__(self, title: str):
         self.title = title
