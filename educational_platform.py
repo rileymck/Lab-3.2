@@ -18,19 +18,48 @@ class Student(User):
 #user may need to change depending on what its called
 class Instructor(User):
    def get_role(self) -> str:
-       return "Instructor"
+        return "Instructor"
+
+    def assign_assessment(self, course: Course, assessment: Assessment):
+        course.add_assessment(assessment)
+
+    def grade_student(self, assessment: Assessment, submission: str) -> float:
+        print(f"{self.name} grading {assessment.title}")
+        return assessment.grade(submission)
 
 class Assessment(ABC):
-    def __init__(self, title: str):
-        self.title = title
-
-    @abstractmethod
-    def grade(self):
-        pass
+    def grade(self, submission: str) -> float:
+        rand_num = random.randint(1, 5)
+        print(f"Grading assignment: {self.title} manually.")
+        if rand_num == 1:
+            x = "F"
+        elif rand_num == 2:
+            x = "D"
+        elif rand_num == 3:
+            x = "C"
+        elif rand_num == 4:
+            x = "B"
+        else:
+            x = "A"
+        print(f"Grade: {x}")
+        return x
 
 class Quiz(Assessment):
-    def grade(self):
+   def grade(self, submission: str) -> float:
+        rand_num = random.randint(1, 5)
         print(f"Grading quiz: {self.title} automatically.")
+        if rand_num == 1:
+            x = "F"
+        elif rand_num == 2:
+            x = "D"
+        elif rand_num == 3:
+            x = "C"
+        elif rand_num == 4:
+            x = "B"
+        else:
+            x = "A"
+        print(f"Grade: {x}")
+        return x
 
 class Assignment(Assessment):
     def grade(self):
@@ -50,4 +79,20 @@ class Course(Generic[T]):
         for assessment in self.assessments:
             assessment.grade()
 
-#Complete your main function here
+def main():
+    instructor = Instructor("Dr. Smith", "smith@university.edu")
+    student = Student("Jane Doe", "jane@student.edu")
+
+    course = Course(name="Intro to CS")
+
+    quiz1 = Quiz("Week 1 Quiz")
+    assignment1 = Assignment("Project 1")
+
+    instructor.assign_assessment(course, quiz1)
+    instructor.assign_assessment(course, assignment1)
+
+    instructor.grade_student(quiz1, "quiz answers")
+    instructor.grade_student(assignment1, "assignment content")
+
+if __name__ == "__main__":
+    main()
